@@ -11,5 +11,7 @@ routes.post("/ongs", OngController.store);
 
 //ROTAS DESTINADAS AOS INCIDENTES 
 routes.post("/incidents",incidentController.store);
+routes.get("/incidents",incidentController.index);
+routes.delete("/incidents/:id", incidentController.destroy)
 
 module.exports = routes;

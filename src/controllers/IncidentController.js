@@ -2,7 +2,16 @@ const connection = require("../database/connection");
 
 module.exports = {
   async index(req, res) {
-    const incidents = await connection("incidents").select("*");
+    const { page = 1 } = req.query;
+
+    const [count]  =  await connection("incidents").count();
+
+    console.log(count);
+
+    const incidents = await connection("incidents")
+      .limit(5)
+      .offset((page - 1) * 5)
+      .select("*");
 
     return res.json(incidents);
   },
@@ -30,9 +39,11 @@ module.exports = {
       .first();
 
     if (incident.ong_id != ong_id) {
-      return res.status(401).json({error: 'Operation not permited'})
+      return res.status(401).json({ error: "Operation not permited" });
     }
-    await connection('incidents').where('id',id).delete();
+    await connection("incidents")
+      .where("id", id)
+      .delete();
 
     return res.status(204).send();
   }

@@ -3,11 +3,12 @@ const express = require("express");
 const OngController = require("./controllers/OngController");
 const incidentController = require("./controllers/IncidentController")
 const ProfileController = require("./controllers/ProfileController");
+const SessionController = require("./controllers/SessionControler");
 
 const routes = express.Router();
 
 //ROTA DE SESSÃO
-routes.post("/sessions")
+routes.post("/sessions", SessionController.store)
 
 //ROTAS DE CRIAÇAO E DE LISTAGEM DAS ONGS
 routes.get("/ongs", OngController.index);
